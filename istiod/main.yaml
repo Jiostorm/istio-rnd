@@ -1,0 +1,20 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+spec:
+  profile: default
+  meshConfig:
+    defaultConfig:
+      proxyMetadata:
+        ISTIO_META_DNS_CAPTURE: "true"
+    accessLogFile: /dev/stdout
+  components:
+    egressGateways:
+      - name: istio-egressgateway
+        enabled: true
+  values:
+    global:
+      meshID: mesh-1
+      multiCluster:
+        clusterName: istio-mesh
+      network: <istiod-network>
+      externalIstiod: true

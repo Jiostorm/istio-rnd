@@ -1,0 +1,18 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  name: egress
+  namespace: istio-system
+spec:
+  profile: empty
+  components:
+    egressGateways:
+      - name: istio-egressgateway
+        namespace: istio-system
+        enabled: true
+        label:
+          istio: egressgateway
+  values:
+    gateways:
+      istio-egressgateway:
+        injectionTemplate: gateway
