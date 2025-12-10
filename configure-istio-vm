@@ -1,0 +1,36 @@
+#!/usr/bin/env dash
+
+CMD=$1
+DIR=$2
+
+case $CMD in
+"install")
+  mkdir -p /etc/certs
+  cp "$DIR"/root-cert.pem /etc/certs/root-cert.pem
+
+  mkdir -p /var/run/secrets/tokens
+  cp "$DIR"/istio-token /var/run/secrets/tokens/istio-token
+
+  dpkg -i istio-sidecar.deb
+
+  cp "$DIR"/cluster.env /var/lib/istio/envoy/cluster.env
+
+  mkdir -p /etc/istio/config
+  cp "$DIR"/mesh.yaml /etc/istio/config/mesh
+
+  # Also append it to /etc/cloud/templates/hosts.debian.tmpl
+  cat "$DIR"/hosts >>/etc/hosts
+
+  mkdir -p /etc/istio/proxy
+  chown -R istio-proxy /var/lib/istio /etc/certs /etc/istio/proxy /etc/istio/config /var/run/secrets /etc/certs/root-cert.pem
+  ;;
+"uninstall")
+  systemctl stop istio || true
+  rm -rf /var/lib/istio /etc/certs /etc/istio/proxy /etc/istio/config /var/run/secrets /var/log/istio
+  dpkg --purge istio-sidecar
+  sed -i '$d' /etc/hosts
+  ;;
+*)
+  echo "Error: Unspecified configuration command [install|uninstall]"
+  ;;
+esac

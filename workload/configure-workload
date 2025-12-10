@@ -1,0 +1,7 @@
+#!/usr/bin/env dash
+
+istioctl x workload entry configure -f workload-group.yaml \
+  -o "<output-directory>" \
+  --clusterID istio-mesh \
+  --istioNamespace istio-system \
+  --autoregister

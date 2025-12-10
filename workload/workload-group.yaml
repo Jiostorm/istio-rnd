@@ -1,0 +1,13 @@
+apiVersion: networking.istio.io/v1
+kind: WorkloadGroup
+metadata:
+  name: <workload-group-name>
+  namespace: <workload-group-ns>
+spec:
+  metadata:
+    labels:
+      app.kubernetes.io/cluster: <istiod-cluster>
+      app.kubernetes.io/component: <component-name>
+  template:
+    serviceAccount: <workload-sa-name>
+    network: <workload-network>
