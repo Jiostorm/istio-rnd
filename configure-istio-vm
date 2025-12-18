@@ -27,7 +27,7 @@ case $CMD in
 "uninstall")
   systemctl stop istio || true
   rm -rf /var/lib/istio /etc/certs /etc/istio/proxy /etc/istio/config /var/run/secrets /var/log/istio
-  dpkg --purge istio-sidecar
+  dpkg -P istio-sidecar
   sed -i '$d' /etc/hosts
   ;;
 *)
