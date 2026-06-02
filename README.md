@@ -257,7 +257,7 @@ spec:
 - Create a `service` matching the *VM*’s specifications to access the `VM` from the cluster.
 
 ```yaml
-# t2-replica.yaml
+# workload-svc.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -274,6 +274,29 @@ spec:
       name: tcp-<svc>
       port: <port-number>
       targetPort: <port-number>
+```
+
+- Or create a `service-entry` matching the **VM**'s specifications to access the `VM` from the cluster.
+
+```yaml
+# service-entry.yaml
+apiVersion: networking.istio.io/v1
+kind: ServiceEntry
+metadata:
+  name: <service-entry-name>
+spec:
+  hosts:
+    - <service-dns>.internal
+  location: MESH_INTERNAL
+  ports:
+    - number: 5432
+      name: tcp-svc
+      protocol: TCP
+  resolution: STATIC
+  workloadSelector:
+    labels:
+      app.kubernetes.io/cluster: <istiod-cluster>
+      app.kubernetes.io/component: <component-name>
 ```
 
 # Setup
