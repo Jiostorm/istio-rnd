@@ -145,8 +145,8 @@ spec:
 ## Data Plane
 
 - Create a `namespace` dedicated for `istio` (*istio-system*).
-    - With corresponding `topology.istio.io/network`label matching the `network` specified in the  `istiod.yaml` .
-    - With corresponding **`topology.istio.io/controlPlaneClusters` annotation matching the `meshID` of the *Service Mesh* specified in `istiod.yaml` of the *Control Plane*.**
+    - With corresponding `topology.istio.io/network` label matching the `network` specified in the `istiod.yaml`.
+    - With corresponding `topology.istio.io/controlPlaneClusters` annotation matching the `meshID` of the *Service Mesh* specified in `istiod.yaml` of the *Control Plane*.**
 - Deploy `istiod` and its `eastwest` component in a *MultiCluster Primary-Remote in Different Network* setup using `istioctl`.
 
 ```yaml
